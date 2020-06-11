@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS  transactions;
+create table transactions(id decimal(10), transaction_date timestamp,source_account varchar(255),target_account varchar(255),dollar_amount decimal(14,2));
+insert into transactions values(1,'2020-05-05 11:12:11','account1','external1', '11000');
+insert into transactions values(1,'2020-04-05 11:12:11','account1','external1', '9000');
+insert into transactions values(1,'2020-03-05 11:12:11','account1','external1', '12000');
+insert into transactions values(1,'2020-02-05 11:12:11','account1','external1', '10000');
+insert into transactions values(1,'2020-05-05 11:12:11','account2','external2', '2000');
+insert into transactions values(1,'2020-04-28 11:12:11','account2','external2', '1000');
+insert into transactions values(1,'2020-04-21 11:12:11','account2','external2', '3000');
+insert into transactions values(1,'2020-04-14 11:12:11','account2','external2', '5000');
+insert into transactions values(1,'2020-04-05 11:12:11','account2','external2', '2000');
