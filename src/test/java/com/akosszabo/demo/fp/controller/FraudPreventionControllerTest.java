@@ -1,4 +1,4 @@
-package com.akosszabo.demo.fp.resource;
+package com.akosszabo.demo.fp.controller;
 
 import com.akosszabo.demo.fp.service.FraudPreventionService;
 import org.junit.Test;
@@ -14,8 +14,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(FraudPreventionResource.class)
-public class FraudPreventionResourceTest {
+@WebMvcTest(FraudPreventionController.class)
+public class FraudPreventionControllerTest {
 
     @Autowired
     private MockMvc mvc;

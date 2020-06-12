@@ -13,7 +13,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     @Query( value = "SELECT * FROM transactions t where t.source_account = :source" +
-    " and t.target_account = :target order by t.transaction_date limit :itemCount",
+    " and t.target_account = :target order by t.transaction_date DESC limit :itemCount",
             nativeQuery = true)
     List<Transaction> findLastNTransactionsForAccounts(@Param("source") final String sourceAccount,
                                             @Param("target") final String targetAccount,

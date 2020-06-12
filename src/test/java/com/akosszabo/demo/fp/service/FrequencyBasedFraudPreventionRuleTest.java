@@ -1,6 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Test;
@@ -13,8 +14,9 @@ import static org.junit.Assert.*;
 
 public class FrequencyBasedFraudPreventionRuleTest {
 
+    public static final String MESSAGE = "The transaction date is outside of the expected range";
     private FrequencyBasedFraudPreventionRule rule = new FrequencyBasedFraudPreventionRule();
-    private TransactionContext transactionContext;
+
 
     @Test
     public void testSuccessfulWeeklyTransaction() {
@@ -32,6 +34,8 @@ public class FrequencyBasedFraudPreventionRuleTest {
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
         assertFalse(result.isSuccess());
+        assertEquals(MESSAGE, result.getMessage());
+        assertEquals(FraudCheckType.FREQUENCY, result.getErrorType());
     }
 
     @Test

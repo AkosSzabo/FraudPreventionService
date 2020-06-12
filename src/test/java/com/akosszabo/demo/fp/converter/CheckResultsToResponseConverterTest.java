@@ -1,6 +1,7 @@
 package com.akosszabo.demo.fp.converter;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.response.TransactionFraudCheckResponse;
 import org.junit.Test;
 
@@ -11,30 +12,29 @@ import static org.junit.Assert.*;
 
 public class CheckResultsToResponseConverterTest {
 
-    public static final String MESSAGE_1 = "Message1";
-    public static final String MESSAGE_2 = "Message2";
+    public static final String ERROR_MESSAGE = "Message2";
 
     private CheckResultsToResponseConverter converter = new CheckResultsToResponseConverter();
 
     @Test
     public void testFailureResponseConversion() {
         final List<FraudCheckResult> resultList = new ArrayList<>();
-        final FraudCheckResult checkResult1 = new FraudCheckResult(true, MESSAGE_1);
-        final FraudCheckResult checkResult2 = new FraudCheckResult(false, MESSAGE_2);
+        final FraudCheckResult checkResult1 = FraudCheckResult.createSuccessful();
+        final FraudCheckResult checkResult2 = FraudCheckResult.createFailed(ERROR_MESSAGE, FraudCheckType.AMOUNT);
         resultList.add(checkResult1);
         resultList.add(checkResult2);
 
         final TransactionFraudCheckResponse result = converter.convert(resultList);
 
         assertEquals(1,result.getIssues().size());
-        assertEquals(MESSAGE_2,result.getIssues().get(0));
+        assertEquals(ERROR_MESSAGE,result.getIssues().get(0).getMessage());
         assertTrue(result.isFlaggedForFraud());
     }
 
     @Test
     public void tesSuccessResponseConversion() {
         final List<FraudCheckResult> resultList = new ArrayList<>();
-        final FraudCheckResult checkResult1 = new FraudCheckResult(true, MESSAGE_1);
+        final FraudCheckResult checkResult1 = FraudCheckResult.createSuccessful();
         resultList.add(checkResult1);
 
         final TransactionFraudCheckResponse result = converter.convert(resultList);

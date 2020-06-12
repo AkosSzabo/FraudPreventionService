@@ -5,6 +5,7 @@ import com.akosszabo.demo.fp.domain.FraudCheckResult;
 import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import com.akosszabo.demo.fp.persistence.TransactionDao;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Log
 @Service
 public class ParallelFraudPreventionService implements FraudPreventionService {
 

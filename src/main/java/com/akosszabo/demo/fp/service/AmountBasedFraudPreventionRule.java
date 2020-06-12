@@ -1,5 +1,6 @@
 package com.akosszabo.demo.fp.service;
 
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
 
@@ -18,7 +19,7 @@ public class AmountBasedFraudPreventionRule implements FraudPreventionRule {
                     .stream().map(t -> t.getDollarAmount())
                     .reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(transactionContext.getTransactionHistory().size()));
             if(isAmountTooHighComparedToAverage(transactionContext.getDollarAmount(), averageAmount)) {
-                result = FraudCheckResult.createFailed(FAILURE_MESSAGE);
+                result = FraudCheckResult.createFailed(FAILURE_MESSAGE, FraudCheckType.AMOUNT);
             }
         }
         return result;

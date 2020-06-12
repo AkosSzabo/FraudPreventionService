@@ -1,5 +1,6 @@
 package com.akosszabo.demo.fp.service;
 
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
-    public static final String FAILURE_MESSAGE = "The transaction date deviates from the expected value";
+    public static final String FAILURE_MESSAGE = "The transaction date is outside of the expected range";
 
     @Override
     public FraudCheckResult evaluate(final TransactionContext transactionContext) {
@@ -39,7 +40,7 @@ public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
             final long minFrequency = avarageFequency/2;
             final long daysPassed = ChronoUnit.DAYS.between(transactionContext.getTransactionHistory().get(0).getTransactionDate(),transactionContext.getDateTime());
             if(maxFrequency<daysPassed||daysPassed<minFrequency) {
-                result = FraudCheckResult.createFailed(FAILURE_MESSAGE);
+                result = FraudCheckResult.createFailed(FAILURE_MESSAGE, FraudCheckType.FREQUENCY);
             }
 
 

@@ -1,6 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 
 public class AmountBasedFraudPreventionRuleTest {
 
+    public static final String MESSAGE = "Transaction dollar amount is too high";
     private AmountBasedFraudPreventionRule rule = new AmountBasedFraudPreventionRule();
     private TransactionContext transactionContext;
 
@@ -55,7 +57,8 @@ public class AmountBasedFraudPreventionRuleTest {
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
         assertFalse(result.isSuccess());
-        assertEquals("Transaction dollar amount is too high",result.getMessage());
+        assertEquals(MESSAGE,result.getMessage());
+        assertEquals(FraudCheckType.AMOUNT, result.getErrorType());
     }
 
     @Test

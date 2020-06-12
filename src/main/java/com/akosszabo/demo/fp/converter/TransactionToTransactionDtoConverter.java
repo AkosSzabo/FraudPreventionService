@@ -15,6 +15,7 @@ public class TransactionToTransactionDtoConverter implements Converter<Transacti
         transactionDto.setSourceAccount(transaction.getSourceAccount());
         transactionDto.setTargetAccount(transaction.getTargetAccount());
         transactionDto.setDollarAmount(transaction.getDollarAmount());
+        transactionDto.setTransactionDate(transaction.getTransactionDate());
         return transactionDto;
     }
 }

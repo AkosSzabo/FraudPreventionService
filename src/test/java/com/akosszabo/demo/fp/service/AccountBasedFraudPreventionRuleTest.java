@@ -1,6 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
+import com.akosszabo.demo.fp.domain.FraudCheckType;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class AccountBasedFraudPreventionRuleTest {
 
+    public static final String MESSAGE = "No previous transactions for this payee";
     private AccountBasedFraudPreventionRule rule = new AccountBasedFraudPreventionRule();
 
     @Test
@@ -22,7 +24,8 @@ public class AccountBasedFraudPreventionRuleTest {
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
         assertFalse(result.isSuccess());
-        assertEquals("No previous transactions for this payee",result.getMessage());
+        assertEquals(MESSAGE,result.getMessage());
+        assertEquals(FraudCheckType.ACCOUNT, result.getErrorType());
     }
 
     @Test

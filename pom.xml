@@ -55,8 +55,8 @@
       <scope>test</scope> 
     </dependency> 
   </dependencies>  
-  <build> 
-    <plugins> 
+  <build>
+    <plugins>
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
         <artifactId>spring-boot-maven-plugin</artifactId> 
@@ -67,11 +67,10 @@
     <profile> 
       <id>int-test</id>  
       <build> 
-        <plugins> 
+        <plugins>
           <plugin> 
             <groupId>org.codehaus.mojo</groupId>  
-            <artifactId>build-helper-maven-plugin</artifactId>  
-            <version>1.10</version>  
+            <artifactId>build-helper-maven-plugin</artifactId>
             <executions> 
               <execution> 
                 <id>add-integration-test-sources</id>  

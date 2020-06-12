@@ -20,5 +20,5 @@ import java.util.List;
 @AllArgsConstructor
 public class TransactionFraudCheckResponse {
     private boolean flaggedForFraud;
-    private List<String> issues;
+    private List<Issue> issues;
 }

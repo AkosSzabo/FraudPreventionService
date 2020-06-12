@@ -1,4 +1,4 @@
-package com.akosszabo.demo.fp.resource;
+package com.akosszabo.demo.fp.controller;
 
 import com.akosszabo.demo.fp.converter.CheckResultsToResponseConverter;
 import com.akosszabo.demo.fp.converter.RequestToTransactionContextConverter;
@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @Log
-public class FraudPreventionResource {
+public class FraudPreventionController {
 
     @Autowired
     private FraudPreventionService fraudPreventionService;
@@ -28,10 +28,11 @@ public class FraudPreventionResource {
 
     @RequestMapping(value = "/api/prevention/check", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public TransactionFraudCheckResponse checkTransaction(@RequestBody @Valid final TransactionFraudCheckRequest request) {
-        log.info(request.toString());
+        log.info("request: " + request.toString());
 
-        //log.info(repo.findLastNTransactionsForAccounts(transactionFraudCheckRequest.getUserAccountNumber(),transactionFraudCheckRequest.getDestinationAccountNumber(),3).size() + "");
-        return responseConverter.convert(fraudPreventionService.checkTransaction(requestConverter.convert(request)));
+        final TransactionFraudCheckResponse response = responseConverter.convert(fraudPreventionService.checkTransaction(requestConverter.convert(request)));
+        log.info("response: " + response.toString());
+        return response;
     }
 
 

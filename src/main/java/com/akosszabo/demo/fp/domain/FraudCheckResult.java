@@ -9,13 +9,14 @@ import lombok.Getter;
 public class FraudCheckResult {
 
     public static FraudCheckResult createSuccessful() {
-        return new FraudCheckResult(true,"");
+        return new FraudCheckResult(true,"", null);
     }
 
-    public static FraudCheckResult createFailed(final String message) {
-        return new FraudCheckResult(false,message);
+    public static FraudCheckResult createFailed(final String message, final FraudCheckType errorType) {
+        return new FraudCheckResult(false,message, errorType);
     }
 
     private boolean success;
     private String message;
+    private FraudCheckType errorType;
 }

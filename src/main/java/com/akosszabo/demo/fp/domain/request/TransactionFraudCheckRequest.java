@@ -22,5 +22,6 @@ public class TransactionFraudCheckRequest {
     @NotNull
     private String destinationAccountNumber;
     @Min(0)
+    @NotNull
     private BigDecimal dollarAmount;
 }
