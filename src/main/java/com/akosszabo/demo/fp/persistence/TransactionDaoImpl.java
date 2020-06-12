@@ -6,9 +6,7 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,15 +19,6 @@ public class TransactionDaoImpl implements TransactionDao {
 
     @Autowired
     private Converter<Transaction, TransactionDto> transactionToTransactionDtoConverter;
-
-    private BigDecimal nullSafeConversion(String string) {
-        if (StringUtils.isEmpty(string)) {
-            return new BigDecimal("0");
-        } else {
-            return new BigDecimal(string);
-        }
-
-    }
 
     @Override
     public List<TransactionDto> findLastNTransactionsForAccounts(final String sourceAccount,

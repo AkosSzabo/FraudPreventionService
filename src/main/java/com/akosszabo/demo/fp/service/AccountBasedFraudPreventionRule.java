@@ -5,7 +5,7 @@ import com.akosszabo.demo.fp.domain.FraudCheckResult;
 
 public class AccountBasedFraudPreventionRule implements FraudPreventionRule {
 
-    public static final String FAILURE_MESSAGE = "No previous transactions for this partner account";
+    public static final String FAILURE_MESSAGE = "No previous transactions for this payee";
 
     @Override
     public FraudCheckResult evaluate(final TransactionContext transactionContext) {

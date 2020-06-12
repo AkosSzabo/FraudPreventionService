@@ -32,13 +32,13 @@ public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
 //            });
             /////////////////
                 for(Integer i=1;i<transactionContext.getTransactionHistory().size();i++) {
-                    sum += ChronoUnit.DAYS.between(transactionContext.getTransactionHistory().get(i-1).getTransactionDate(), transactionContext.getTransactionHistory().get(i).getTransactionDate());
+                    sum += ChronoUnit.DAYS.between( transactionContext.getTransactionHistory().get(i).getTransactionDate(),transactionContext.getTransactionHistory().get(i-1).getTransactionDate());
                 }
             final long avarageFequency = sum / (transactionContext.getTransactionHistory().size() - 1);
             final long maxFrequency = avarageFequency*2;
             final long minFrequency = avarageFequency/2;
-            final long daysPassed = ChronoUnit.DAYS.between(transactionContext.getTransactionHistory().get(transactionContext.getTransactionHistory().size()-1).getTransactionDate(), transactionContext.getDateTime());
-            if(maxFrequency>=daysPassed&&daysPassed>=minFrequency) {
+            final long daysPassed = ChronoUnit.DAYS.between(transactionContext.getTransactionHistory().get(0).getTransactionDate(),transactionContext.getDateTime());
+            if(maxFrequency<daysPassed||daysPassed<minFrequency) {
                 result = FraudCheckResult.createFailed(FAILURE_MESSAGE);
             }
 
