@@ -42,7 +42,7 @@ public class FraudPreventionControllerTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : 1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -52,7 +52,7 @@ public class FraudPreventionControllerTest {
     public void testMissingDate() throws Exception {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : 1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -63,7 +63,7 @@ public class FraudPreventionControllerTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010t-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : 1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -73,14 +73,14 @@ public class FraudPreventionControllerTest {
     public void testAccountNumberMissing() throws Exception {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : 1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void testDestinationAccountNumberMissing() throws Exception {
+    public void testpayeeAccountNumberMissing() throws Exception {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
@@ -94,7 +94,7 @@ public class FraudPreventionControllerTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\"}")
+                        "\"payeeAccountNumber\" : \"account3\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -105,7 +105,7 @@ public class FraudPreventionControllerTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : -1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());

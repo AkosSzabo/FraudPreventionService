@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS  transactions;
-create table transactions(id decimal(10), transaction_date timestamp,source_account varchar(255),target_account varchar(255),dollar_amount decimal(14,2));
+create table transactions(id decimal(10), transaction_date timestamp,source_account varchar(255),payee_account varchar(255),dollar_amount decimal(14,2));
 insert into transactions values(1,'2020-05-05 11:12:11','account1','external1', '11000');
 insert into transactions values(2,'2020-04-05 11:12:11','account1','external1', '9000');
 insert into transactions values(3,'2020-03-05 11:12:11','account1','external1', '12000');

@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.persistence;
 
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
-import com.akosszabo.demo.fp.entity.Transaction;
+import com.akosszabo.demo.fp.persistence.entity.Transaction;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -14,11 +14,14 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionDaoImpl implements TransactionDao {
 
-    @Autowired
     private TransactionRepository transactionRepository;
-
-    @Autowired
     private Converter<Transaction, TransactionDto> transactionToTransactionDtoConverter;
+
+    public TransactionDaoImpl(final TransactionRepository transactionRepository,
+                              final Converter<Transaction, TransactionDto> transactionToTransactionDtoConverter) {
+        this.transactionRepository = transactionRepository;
+        this.transactionToTransactionDtoConverter = transactionToTransactionDtoConverter;
+    }
 
     @Override
     public List<TransactionDto> findLastNTransactionsForAccounts(final String sourceAccount,

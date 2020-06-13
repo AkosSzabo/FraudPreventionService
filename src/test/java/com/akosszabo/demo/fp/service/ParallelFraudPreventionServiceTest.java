@@ -45,12 +45,12 @@ public class ParallelFraudPreventionServiceTest {
     }
 
     @Test
-    public void test1() {
+    public void testServiceCallingRules() {
         final TransactionContext transactionContext =  new TransactionContext();
         final String account = "account";
         final String payee = "payee";
         transactionContext.setUserAccountNumber(account);
-        transactionContext.setDestinationAccountNumber(payee);
+        transactionContext.setPayeeAccountNumber(payee);
         final List<TransactionDto> transactions = mock(List.class);
         when(transactionDao.findLastNTransactionsForAccounts(eq(account),eq(payee),eq(5))).thenReturn(transactions);
         ArgumentCaptor<TransactionContext> rule1Captor = ArgumentCaptor.forClass(TransactionContext.class);

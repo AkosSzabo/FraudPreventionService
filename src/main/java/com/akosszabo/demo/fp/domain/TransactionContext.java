@@ -11,7 +11,7 @@ import java.util.List;
 public class TransactionContext {
     private LocalDateTime dateTime;
     private String userAccountNumber;
-    private String destinationAccountNumber;
+    private String payeeAccountNumber;
     private BigDecimal dollarAmount;
     private List<TransactionDto> transactionHistory;
 }

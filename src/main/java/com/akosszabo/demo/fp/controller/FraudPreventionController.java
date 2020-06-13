@@ -19,22 +19,27 @@ import javax.validation.Valid;
 @Log
 public class FraudPreventionController {
 
-    @Autowired
     private FraudPreventionService fraudPreventionService;
-    @Autowired
     private CheckResultsToResponseConverter responseConverter;
-    @Autowired
     private RequestToTransactionContextConverter requestConverter;
+
+    @Autowired
+    public FraudPreventionController(final FraudPreventionService fraudPreventionService,
+                                     final CheckResultsToResponseConverter responseConverter,
+                                     final RequestToTransactionContextConverter requestConverter) {
+        this.fraudPreventionService = fraudPreventionService;
+        this.responseConverter = responseConverter;
+        this.requestConverter = requestConverter;
+    }
 
     @RequestMapping(value = "/api/prevention/check", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public TransactionFraudCheckResponse checkTransaction(@RequestBody @Valid final TransactionFraudCheckRequest request) {
-        log.info("request: " + request.toString());
+        log.info("request: " + request);
 
         final TransactionFraudCheckResponse response = responseConverter.convert(fraudPreventionService.checkTransaction(requestConverter.convert(request)));
-        log.info("response: " + response.toString());
+        log.info("response: " + response);
         return response;
     }
-
 
 
 }

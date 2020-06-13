@@ -9,14 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -35,11 +29,11 @@ public class FraudPreventionServiceIntTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"account3\",\n" +
+                        "\"payeeAccountNumber\" : \"account3\",\n" +
                         "\"dollarAmount\" : 1000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.flaggedForFraud").value(true))
+                .andExpect(jsonPath("$.flaggedForIssues").value(true))
                 .andExpect(jsonPath("$.issues").isArray())
                 .andExpect(jsonPath("$.issues", hasSize(1)))
                 .andExpect(jsonPath("$.issues[0].message").value("No previous transactions for this payee"))
@@ -51,11 +45,11 @@ public class FraudPreventionServiceIntTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2020-06-10 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account1\",\n" +
-                        "\"destinationAccountNumber\" : \"external1\",\n" +
+                        "\"payeeAccountNumber\" : \"external1\",\n" +
                         "\"dollarAmount\" : 9000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.flaggedForFraud").value(false))
+                .andExpect(jsonPath("$.flaggedForIssues").value(false))
                 .andExpect(jsonPath("$.issues").isArray())
                 .andExpect(jsonPath("$.issues", hasSize(0)));
     }
@@ -65,11 +59,11 @@ public class FraudPreventionServiceIntTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2020-06-10 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account3\",\n" +
-                        "\"destinationAccountNumber\" : \"external1\",\n" +
+                        "\"payeeAccountNumber\" : \"external1\",\n" +
                         "\"dollarAmount\" : 3000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.flaggedForFraud").value(false))
+                .andExpect(jsonPath("$.flaggedForIssues").value(false))
                 .andExpect(jsonPath("$.issues").isArray())
                 .andExpect(jsonPath("$.issues", hasSize(0)));
     }
@@ -79,11 +73,11 @@ public class FraudPreventionServiceIntTest {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2010-02-15 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account2\",\n" +
-                        "\"destinationAccountNumber\" : \"external2\",\n" +
+                        "\"payeeAccountNumber\" : \"external2\",\n" +
                         "\"dollarAmount\" : 10000.2}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.flaggedForFraud").value(true))
+                .andExpect(jsonPath("$.flaggedForIssues").value(true))
                 .andExpect(jsonPath("$.issues").isArray())
                 .andExpect(jsonPath("$.issues", hasSize(2)))
                 .andExpect(content().string(containsString("\"code\":\"AMOUNT\"")))

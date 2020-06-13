@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TransactionFraudCheckResponse {
 
-    private boolean flaggedForFraud;
+    private boolean flaggedForIssues;
     private List<Issue> issues;
 
 }

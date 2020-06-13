@@ -14,10 +14,7 @@ public class CheckResultsToResponseConverter implements Converter<List<FraudChec
 
     @Override
     public TransactionFraudCheckResponse convert(final List<FraudCheckResult> transactionFraudCheckResults) {
-
         final List<Issue> issues = transactionFraudCheckResults.stream().filter(r -> !r.isSuccess()).map(r -> new Issue(r.getMessage(),r.getErrorCode())).collect(Collectors.toList());
-        final TransactionFraudCheckResponse result = new TransactionFraudCheckResponse(issues.size() > 0, issues);
-        return result;
-
+        return new TransactionFraudCheckResponse(issues.size() > 0, issues);
     }
 }

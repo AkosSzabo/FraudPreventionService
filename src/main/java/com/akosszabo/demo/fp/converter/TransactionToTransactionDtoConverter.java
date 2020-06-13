@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.converter;
 
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
-import com.akosszabo.demo.fp.entity.Transaction;
+import com.akosszabo.demo.fp.persistence.entity.Transaction;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,10 @@ public class TransactionToTransactionDtoConverter implements Converter<Transacti
 
     @Override
     public TransactionDto convert(Transaction transaction) {
-
         final TransactionDto transactionDto = new TransactionDto();
         transactionDto.setId(transaction.getId());
         transactionDto.setSourceAccount(transaction.getSourceAccount());
-        transactionDto.setTargetAccount(transaction.getTargetAccount());
+        transactionDto.setPayeeAccount(transaction.getPayeeAccount());
         transactionDto.setDollarAmount(transaction.getDollarAmount());
         transactionDto.setTransactionDate(transaction.getTransactionDate());
         return transactionDto;

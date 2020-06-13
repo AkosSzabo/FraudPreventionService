@@ -8,7 +8,7 @@ import com.akosszabo.demo.fp.util.DateUtil;
 import com.akosszabo.demo.fp.util.LocalDateTimeFrequencyCollector;
 
 public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
-    public static final String FAILURE_MESSAGE = "The transaction date is outside of the expected range";
+    public static final String WARNING_MESSAGE = "The transaction date is outside of the expected range";
     public static final int LOWER_LIMIT_DENOMINATOR = 2;
     public static final int UPPER_LIMIT_MULTIPLIER = 2;
 
@@ -21,7 +21,7 @@ public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
             final int calculateLowerLimit = calculateLowerLimit(averageDifferenceInDays);
             final int daysPassed = DateUtil.calculateDaysBetweenLocalDateTimes(transactionContext.getTransactionHistory().get(0).getTransactionDate(),transactionContext.getDateTime());
             if(calculateUpperLimit<daysPassed||daysPassed<calculateLowerLimit) {
-                result = FraudCheckResult.createFailed(FAILURE_MESSAGE, FraudCheckCode.FREQUENCY);
+                result = FraudCheckResult.createFailed(WARNING_MESSAGE, FraudCheckCode.FREQUENCY);
             }
         }
         return result;

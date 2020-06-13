@@ -28,7 +28,7 @@ public class CheckResultsToResponseConverterTest {
 
         assertEquals(1,result.getIssues().size());
         assertEquals(ERROR_MESSAGE,result.getIssues().get(0).getMessage());
-        assertTrue(result.isFlaggedForFraud());
+        assertTrue(result.isFlaggedForIssues());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class CheckResultsToResponseConverterTest {
         final TransactionFraudCheckResponse result = converter.convert(resultList);
 
         assertEquals(0,result.getIssues().size());
-        assertFalse(result.isFlaggedForFraud());
+        assertFalse(result.isFlaggedForIssues());
     }
 
 }

@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.persistence;
 
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
-import com.akosszabo.demo.fp.entity.Transaction;
+import com.akosszabo.demo.fp.persistence.entity.Transaction;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;

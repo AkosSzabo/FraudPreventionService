@@ -1,9 +1,7 @@
-package com.akosszabo.demo.fp.entity;
+package com.akosszabo.demo.fp.persistence.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,16 +18,12 @@ public class Transaction {
     @Id
     @Column( name = "id")
     private Long id;
-
     @Column( name = "transaction_date")
     private LocalDateTime transactionDate;
-
     @Column( name = "source_account")
     private String sourceAccount;
-
-    @Column( name = "target_account")
-    private String targetAccount;
-
+    @Column( name = "payee_account")
+    private String payeeAccount;
     @Column( name = "dollar_amount")
     private BigDecimal dollarAmount;
 
