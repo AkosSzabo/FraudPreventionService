@@ -5,11 +5,13 @@ import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import lombok.extern.java.Log;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 @Log
+@Service
 public class AmountBasedFraudPreventionRule implements FraudPreventionRule {
 
     public static final int AMOUNT_LIMIT_MULTIPLIER = 2;

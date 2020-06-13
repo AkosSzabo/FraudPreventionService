@@ -24,8 +24,7 @@ public class ParallelFraudPreventionServiceTest {
 
     @InjectMocks
     private ParallelFraudPreventionService service;
-    @Mock
-    private Map<FraudCheckCode, FraudPreventionRule> ruleMap;
+
     @Mock
     private TransactionDao transactionDao;
     private FraudPreventionRule rule1;
@@ -34,14 +33,14 @@ public class ParallelFraudPreventionServiceTest {
 
     @Before
     public void init() {
-        final Collection<FraudPreventionRule> collectionOfRules = new ArrayList<>();
+        final List<FraudPreventionRule> collectionOfRules = new ArrayList<>();
         rule1 = mock(FraudPreventionRule.class);
         collectionOfRules.add(rule1);
         rule2 = mock(FraudPreventionRule.class);
         collectionOfRules.add(rule2);
         rule3 = mock(FraudPreventionRule.class);
         collectionOfRules.add(rule3);
-        when(ruleMap.values()).thenReturn(collectionOfRules);
+        service = new ParallelFraudPreventionService(transactionDao,collectionOfRules);
     }
 
     @Test

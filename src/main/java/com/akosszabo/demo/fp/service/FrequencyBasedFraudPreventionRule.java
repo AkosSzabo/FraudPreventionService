@@ -6,7 +6,9 @@ import com.akosszabo.demo.fp.domain.FraudCheckResult;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import com.akosszabo.demo.fp.util.DateUtil;
 import com.akosszabo.demo.fp.util.LocalDateTimeFrequencyCollector;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
     public static final String WARNING_MESSAGE = "The transaction date is outside of the expected range";
     public static final int LOWER_LIMIT_DENOMINATOR = 2;
