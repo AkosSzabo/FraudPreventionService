@@ -55,7 +55,7 @@ public class FraudPreventionServiceIntTest {
     }
 
     @Test
-    public void testCheckNoFlagSecondTransaction() throws Exception {
+    public void testCheckNoFlagSecondTransactionOnSingleTransactionHistory() throws Exception {
         mvc.perform(post("/api/prevention/check")
                 .content("{\"dateTime\" : \"2020-06-10 12:11:23\",\n" +
                         "\"userAccountNumber\"  : \"account3\",\n" +

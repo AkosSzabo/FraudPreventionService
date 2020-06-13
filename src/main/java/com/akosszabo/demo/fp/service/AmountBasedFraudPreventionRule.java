@@ -5,6 +5,7 @@ import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import lombok.extern.java.Log;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -16,11 +17,12 @@ public class AmountBasedFraudPreventionRule implements FraudPreventionRule {
 
     public static final int AMOUNT_LIMIT_MULTIPLIER = 2;
     public static final String WARNING_MESSAGE = "Transaction dollar amount is too high";
+    public static final int MINIMUM_COUNT_OF_PREVIOUS_TRANSACTIONS = 2;
 
     @Override
     public FraudCheckResult evaluate(final TransactionContext transactionContext) {
         FraudCheckResult result = FraudCheckResult.createSuccessful();
-        if(transactionContext.getTransactionHistory().size()>0) {
+        if(!CollectionUtils.isEmpty(transactionContext.getTransactionHistory())&&transactionContext.getTransactionHistory().size() >= MINIMUM_COUNT_OF_PREVIOUS_TRANSACTIONS) {
             final BigDecimal averageAmount = transactionContext.getTransactionHistory()
                     .stream().map(TransactionDto::getDollarAmount)
                     .reduce(BigDecimal.ZERO, (a, b) -> a.add(b)).divide(new BigDecimal(transactionContext.getTransactionHistory().size()), RoundingMode.HALF_UP);

@@ -1,17 +1,19 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckCode;
-import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
+import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import com.akosszabo.demo.fp.util.DateUtil;
 import com.akosszabo.demo.fp.util.LocalDateTimeFrequencyCollector;
 import lombok.extern.java.Log;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
 @Log
 @Service
 public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
+    public static final int MINIMUM_COUNT_OF_PREVIOUS_TRANSACTIONS = 2;
     public static final String WARNING_MESSAGE = "The transaction date is outside of the expected range";
     public static final int LOWER_LIMIT_DENOMINATOR = 2;
     public static final int UPPER_LIMIT_MULTIPLIER = 2;
@@ -19,7 +21,7 @@ public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
     @Override
     public FraudCheckResult evaluate(final TransactionContext transactionContext) {
         FraudCheckResult result = FraudCheckResult.createSuccessful();
-        if(transactionContext.getTransactionHistory().size()>1) {
+        if (!CollectionUtils.isEmpty(transactionContext.getTransactionHistory()) && transactionContext.getTransactionHistory().size() >= MINIMUM_COUNT_OF_PREVIOUS_TRANSACTIONS) {
             final int averageDifferenceInDays = transactionContext.getTransactionHistory().stream().map(TransactionDto::getTransactionDate).collect(LocalDateTimeFrequencyCollector.getCollector()).getFrequency();
             final int calculateUpperLimit = calculateUpperLimit(averageDifferenceInDays);
             final int calculateLowerLimit = calculateLowerLimit(averageDifferenceInDays);
