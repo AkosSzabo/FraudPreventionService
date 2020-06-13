@@ -35,7 +35,7 @@ public class AmountBasedFraudPreventionRule implements FraudPreventionRule {
         final BigDecimal upperLimit = averageAmount.multiply(new BigDecimal(AMOUNT_LIMIT_MULTIPLIER));
         final boolean result = upperLimit.compareTo(dollarAmount) < 0;
         if(result) {
-            log.info("Failing comparing transaction amount: " + dollarAmount + " to upper value: " + upperLimit);
+            log.info("Flagging for transaction amount: " + dollarAmount + " to upper value: " + upperLimit);
         }
         return result;
     }

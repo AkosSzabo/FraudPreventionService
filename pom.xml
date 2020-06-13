@@ -13,6 +13,7 @@
   <artifactId>FraudPreventionService</artifactId>
   <version>0.0.1-SNAPSHOT</version>  
   <name>FraudPreventionService</name>
+  <packaging>war</packaging>
   <description>Demo project for FraudPreventionService</description>
   <properties> 
     <java.version>1.8</java.version>
