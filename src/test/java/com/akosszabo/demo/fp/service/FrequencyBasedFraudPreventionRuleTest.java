@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Test;
@@ -20,7 +20,9 @@ public class FrequencyBasedFraudPreventionRuleTest {
 
     @Test
     public void testSuccessfulWeeklyTransaction() {
-        final TransactionContext transactionContext = createContextWithTransactions(5,7);
+        int daysSinceLastTransaction = 5;
+        int averageDaysBetweenTransactions = 7;
+        final TransactionContext transactionContext = createContextWithTransactions(daysSinceLastTransaction,averageDaysBetweenTransactions);
 
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
@@ -29,13 +31,15 @@ public class FrequencyBasedFraudPreventionRuleTest {
 
     @Test
     public void testFailingTransactionComparedToMonthly() {
-        final TransactionContext transactionContext = createContextWithTransactions(3,30);
+        int daysSinceLastTransaction = 3;
+        int averageDaysBetweenTransactions = 30;
+        final TransactionContext transactionContext = createContextWithTransactions(daysSinceLastTransaction,averageDaysBetweenTransactions);
 
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
         assertFalse(result.isSuccess());
         assertEquals(MESSAGE, result.getMessage());
-        assertEquals(FraudCheckType.FREQUENCY, result.getErrorType());
+        assertEquals(FraudCheckCode.FREQUENCY, result.getErrorCode());
     }
 
     @Test
@@ -46,6 +50,30 @@ public class FrequencyBasedFraudPreventionRuleTest {
         final FraudCheckResult result = rule.evaluate(transactionContext);
 
         assertTrue(result.isSuccess());
+    }
+
+    @Test
+    public void testSuccessWithDailyList() {
+        int daysSinceLastTransaction = 1;
+        int averageDaysBetweenTransactions = 0;
+        final TransactionContext transactionContext = createContextWithTransactions(daysSinceLastTransaction,averageDaysBetweenTransactions);
+
+        final FraudCheckResult result = rule.evaluate(transactionContext);
+
+        assertTrue(result.isSuccess());
+    }
+
+    @Test
+    public void testFailureWithDailyList() {
+        int daysSinceLastTransaction = 2;
+        int averageDaysBetweenTransactions = 0;
+        final TransactionContext transactionContext = createContextWithTransactions(daysSinceLastTransaction,averageDaysBetweenTransactions);
+
+        final FraudCheckResult result = rule.evaluate(transactionContext);
+
+        assertFalse(result.isSuccess());
+        assertEquals(MESSAGE, result.getMessage());
+        assertEquals(FraudCheckCode.FREQUENCY, result.getErrorCode());
     }
 
     private static TransactionContext createContextWithTransactions(Integer daysPassedSinceLastTransaction, Integer daysBetweenTransactions) {

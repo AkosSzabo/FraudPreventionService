@@ -2,7 +2,7 @@ package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import com.akosszabo.demo.fp.persistence.TransactionDao;
 import lombok.extern.java.Log;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class ParallelFraudPreventionService implements FraudPreventionService {
 
     @Autowired
-    private Map<FraudCheckType, FraudPreventionRule> ruleMap;
+    private Map<FraudCheckCode, FraudPreventionRule> ruleMap;
     @Autowired
     private TransactionDao transactionDao;
 

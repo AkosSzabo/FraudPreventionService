@@ -12,11 +12,13 @@ public class RequestToTransactionContextConverter implements Converter<Transacti
 
     @Override
     public TransactionContext convert(final TransactionFraudCheckRequest request) {
+
         final TransactionContext result = new TransactionContext();
         result.setDateTime(request.getDateTime());
         result.setDollarAmount(request.getDollarAmount());
         result.setUserAccountNumber(request.getUserAccountNumber());
         result.setDestinationAccountNumber(request.getDestinationAccountNumber());
         return result;
+
     }
 }

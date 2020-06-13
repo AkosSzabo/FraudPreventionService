@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 public class TransactionFraudCheckRequest {
+
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -24,4 +25,5 @@ public class TransactionFraudCheckRequest {
     @Min(0)
     @NotNull
     private BigDecimal dollarAmount;
+
 }

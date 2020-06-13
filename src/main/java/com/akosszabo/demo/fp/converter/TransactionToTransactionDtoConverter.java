@@ -10,6 +10,7 @@ public class TransactionToTransactionDtoConverter implements Converter<Transacti
 
     @Override
     public TransactionDto convert(Transaction transaction) {
+
         final TransactionDto transactionDto = new TransactionDto();
         transactionDto.setId(transaction.getId());
         transactionDto.setSourceAccount(transaction.getSourceAccount());
@@ -17,5 +18,6 @@ public class TransactionToTransactionDtoConverter implements Converter<Transacti
         transactionDto.setDollarAmount(transaction.getDollarAmount());
         transactionDto.setTransactionDate(transaction.getTransactionDate());
         return transactionDto;
+
     }
 }

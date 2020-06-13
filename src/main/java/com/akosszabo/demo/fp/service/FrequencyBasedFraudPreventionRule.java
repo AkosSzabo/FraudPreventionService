@@ -1,58 +1,42 @@
 package com.akosszabo.demo.fp.service;
 
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
+import com.akosszabo.demo.fp.domain.dto.TransactionDto;
+import com.akosszabo.demo.fp.util.DateUtil;
+import com.akosszabo.demo.fp.util.LocalDateTimeFrequencyCollector;
 
 public class FrequencyBasedFraudPreventionRule implements FraudPreventionRule {
     public static final String FAILURE_MESSAGE = "The transaction date is outside of the expected range";
+    public static final int LOWER_LIMIT_DENOMINATOR = 2;
+    public static final int UPPER_LIMIT_MULTIPLIER = 2;
 
     @Override
     public FraudCheckResult evaluate(final TransactionContext transactionContext) {
-
-   //     long noOfDaysBetween = ChronoUnit.DAYS.between(now, now);
         FraudCheckResult result = FraudCheckResult.createSuccessful();
         if(transactionContext.getTransactionHistory().size()>1) {
-            final ArrayList<Integer> daysBetweenTransactions = new ArrayList<>();
-            final LocalDateTime previousDate = null;
-            Long sum = 0L;
-            ////////////////////////////////
-//            final List<LD> collect = transactionContext.getTransactionHistory().stream().map(transactionDto -> transactionContext.getDateTime()).sorted().map(transactionDto -> new LD(transactionContext.getDateTime(), 0, 0L)).collect(Collectors.toList());
-//            collect.stream().reduce((a,b) -> {
-//                if(a!=null) {
-//
-//                }
-//
-//                return new LD(b);
-//            });
-            /////////////////
-                for(Integer i=1;i<transactionContext.getTransactionHistory().size();i++) {
-                    sum += ChronoUnit.DAYS.between( transactionContext.getTransactionHistory().get(i).getTransactionDate(),transactionContext.getTransactionHistory().get(i-1).getTransactionDate());
-                }
-            final long avarageFequency = sum / (transactionContext.getTransactionHistory().size() - 1);
-            final long maxFrequency = avarageFequency*2;
-            final long minFrequency = avarageFequency/2;
-            final long daysPassed = ChronoUnit.DAYS.between(transactionContext.getTransactionHistory().get(0).getTransactionDate(),transactionContext.getDateTime());
-            if(maxFrequency<daysPassed||daysPassed<minFrequency) {
-                result = FraudCheckResult.createFailed(FAILURE_MESSAGE, FraudCheckType.FREQUENCY);
+            final int averageDifferenceInDays = transactionContext.getTransactionHistory().stream().map(TransactionDto::getTransactionDate).collect(LocalDateTimeFrequencyCollector.getCollector()).getFrequency();
+            final int calculateUpperLimit = calculateUpperLimit(averageDifferenceInDays);
+            final int calculateLowerLimit = calculateLowerLimit(averageDifferenceInDays);
+            final int daysPassed = DateUtil.calculateDaysBetweenLocalDateTimes(transactionContext.getTransactionHistory().get(0).getTransactionDate(),transactionContext.getDateTime());
+            if(calculateUpperLimit<daysPassed||daysPassed<calculateLowerLimit) {
+                result = FraudCheckResult.createFailed(FAILURE_MESSAGE, FraudCheckCode.FREQUENCY);
             }
-
-
         }
         return result;
     }
-    @Data
-    @AllArgsConstructor
-    class LD {
-        LocalDateTime ldt;
-        int count;
-        long sum;
+
+    private int calculateLowerLimit(final int days) {
+        return days / LOWER_LIMIT_DENOMINATOR;
+    }
+
+    private int calculateUpperLimit(final int days) {
+        int result = 1;
+        if(days>0L) {
+            result = days * UPPER_LIMIT_MULTIPLIER+1;
+        }
+        return result;
     }
 
 }

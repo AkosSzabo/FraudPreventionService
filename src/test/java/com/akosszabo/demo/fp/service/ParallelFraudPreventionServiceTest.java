@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import com.akosszabo.demo.fp.persistence.TransactionDao;
@@ -12,10 +12,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,7 +25,7 @@ public class ParallelFraudPreventionServiceTest {
     @InjectMocks
     private ParallelFraudPreventionService service;
     @Mock
-    private Map<FraudCheckType, FraudPreventionRule> ruleMap;
+    private Map<FraudCheckCode, FraudPreventionRule> ruleMap;
     @Mock
     private TransactionDao transactionDao;
     private FraudPreventionRule rule1;

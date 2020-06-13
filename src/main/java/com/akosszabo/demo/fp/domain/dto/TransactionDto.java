@@ -10,9 +10,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 public class TransactionDto {
+
         private Long id;
         private LocalDateTime transactionDate;
         private String sourceAccount;
         private String targetAccount;
         private BigDecimal dollarAmount;
+
 }

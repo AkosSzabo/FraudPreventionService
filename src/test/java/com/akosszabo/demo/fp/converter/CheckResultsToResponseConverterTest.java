@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.converter;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.response.TransactionFraudCheckResponse;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class CheckResultsToResponseConverterTest {
     public void testFailureResponseConversion() {
         final List<FraudCheckResult> resultList = new ArrayList<>();
         final FraudCheckResult checkResult1 = FraudCheckResult.createSuccessful();
-        final FraudCheckResult checkResult2 = FraudCheckResult.createFailed(ERROR_MESSAGE, FraudCheckType.AMOUNT);
+        final FraudCheckResult checkResult2 = FraudCheckResult.createFailed(ERROR_MESSAGE, FraudCheckCode.AMOUNT);
         resultList.add(checkResult1);
         resultList.add(checkResult2);
 

@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class AccountBasedFraudPreventionRuleTest {
 
         assertFalse(result.isSuccess());
         assertEquals(MESSAGE,result.getMessage());
-        assertEquals(FraudCheckType.ACCOUNT, result.getErrorType());
+        assertEquals(FraudCheckCode.ACCOUNT, result.getErrorCode());
     }
 
     @Test

@@ -1,5 +1,5 @@
 package com.akosszabo.demo.fp.domain;
 
-public enum FraudCheckType {
+public enum FraudCheckCode {
     AMOUNT,FREQUENCY,ACCOUNT
 }

@@ -1,7 +1,7 @@
 package com.akosszabo.demo.fp.service;
 
 import com.akosszabo.demo.fp.domain.FraudCheckResult;
-import com.akosszabo.demo.fp.domain.FraudCheckType;
+import com.akosszabo.demo.fp.domain.FraudCheckCode;
 import com.akosszabo.demo.fp.domain.TransactionContext;
 import com.akosszabo.demo.fp.domain.dto.TransactionDto;
 import org.junit.Before;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -58,7 +57,7 @@ public class AmountBasedFraudPreventionRuleTest {
 
         assertFalse(result.isSuccess());
         assertEquals(MESSAGE,result.getMessage());
-        assertEquals(FraudCheckType.AMOUNT, result.getErrorType());
+        assertEquals(FraudCheckCode.AMOUNT, result.getErrorCode());
     }
 
     @Test
