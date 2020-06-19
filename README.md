@@ -1,5 +1,11 @@
 # FraudPreventionService
 
+Create a microservice that evaluates a new transaction and marks it possible fraudulent if:
+1. Amount is unexpectedly high
+2. Frequency deviates from the expected value
+3. The payee is unknown
+Do these checks against historical transactions data
+
 ## Building and running the application
 ### Building the artifact
 `mnv clean package` from the project folder
